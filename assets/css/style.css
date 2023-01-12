@@ -1,0 +1,39 @@
+html, body {
+    margin: 0;
+}
+
+header{
+    display: flex;
+    width: 100%;
+    background-color: #8fe398;
+    justify-content: center;
+    color: azure;
+}
+
+h1 {
+    border: 0.7rem solid azure;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+main {
+    display: flex;
+}
+
+aside {
+    display: flex;
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-engine {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-content {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
