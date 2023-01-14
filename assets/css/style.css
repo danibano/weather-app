@@ -1,5 +1,6 @@
 html, body {
     margin: 0;
+    background-color: #74b87c;
 }
 
 header{
@@ -8,6 +9,7 @@ header{
     background-color: #8fe398;
     justify-content: center;
     color: azure;
+    border-bottom: 2rem solid azure;
 }
 
 h1 {
@@ -22,7 +24,7 @@ main {
 
 aside {
     display: flex;
-    width: 30%;
+    width: 20%;
     align-items: center;
     justify-content: center;
 }
@@ -35,5 +37,62 @@ aside {
 .weather-content {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 80%;
+}
+
+.present {
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+    width: 40%;
+    border: 1rem solid #3f6343;
+    border-radius: 1rem;
+    padding: 1rem;
+    justify-content: space-between;
+}
+
+.present-info {
+    font-size: 1.25rem;
+}
+
+.five-title {
+    font-size: 2rem;
+    margin: 1rem;
+}
+
+.future {
+    display: flex;
+    flex-direction: column;
+    border: 1rem solid #3f6343;
+    border-radius: 1rem;
+    margin: 2rem;
+}
+
+#five-day {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fivecast {
+    background-color: #598e5f;
+    padding: 1.5rem;
+    border-radius: 2rem;
+    margin: 1rem;
+    color: azure;
+    border: 0.5rem solid azure;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#date-five {
+    border: 0.5rem solid #3f6343;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.content-five {
+    border: 0.5rem solid #3f6343;
+    border-radius: 2rem;
+    padding: 0.5rem;
 }

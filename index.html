@@ -19,6 +19,7 @@
 
             <section>
                 <section class="search-engine">
+                    <h2>Search For A City</h2>
                     <input id="city-input" placeholder="City Name"></input>
                     <button>Search</button>
                 </section>
@@ -29,19 +30,23 @@
         </aside>
 
         <section class="weather-content">
-            <section>
-                <h2 id="date"> Date </h2>
-                <h2 id="city"> City </h2>
-                <img id="icon" src="" alt="Weather Icon"> 
-                <ul>
-                    <li id="temp"> Temp: </li>
-                    <li id="wind"> Wind: </li>
-                    <li id="humidity"> Humidity: </li>
-                </ul>
+            <section class="present">
+                <div class="present-title">
+                    <h2 id="city"> City </h2>
+                    <h2 id="date"> Date </h2>
+                </div>
+                <div>
+                    <img id="icon" src="" alt="Weather Icon">
+                </div>
+                <div class="present-info">
+                    <p id="temp"> Temp: </p>
+                    <p id="wind"> Wind: </p>
+                    <p id="humidity"> Humidity: </p>
+                </div>
             </section>
 
-            <section>
-                <h3>5-Day Forecast:</h3>
+            <section class="future">
+                <h3 class="five-title">5-Day Forecast:</h3>
                 <div id="five-day"></div>
             </section>
         </section>    

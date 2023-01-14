@@ -88,14 +88,14 @@ function renderFiveDayForecast(fiveDayForecastList) {
     fiveDay.innerHTML = ""
     fiveDayForecastList.forEach(forecast => {
         const forecastDiv = `
-            <div>
+            <div class="fivecast">
                 <h4 id="date-five"> ${new Date(forecast.dt_txt).toDateString()} </h4>
                 <img src="${getWeatherIcon(forecast.weather[0].icon)}" alt="Weather Icon">
-                <ul>
-                    <li id="temp-five"> Temp: ${forecast.main.temp} °F </li>
-                    <li id="wind-five"> Wind: ${forecast.wind.speed} MPH </li>
-                    <li id="humidity-five"> Humidity: ${forecast.main.humidity} % </li>
-                </ul>
+                <section class="content-five">
+                    <p id="temp-five"> Temp: ${forecast.main.temp} °F </p>
+                    <p id="wind-five"> Wind: ${forecast.wind.speed} MPH </p>
+                    <p id="humidity-five"> Humidity: ${forecast.main.humidity} % </p>
+                </section>
             </div>
         `
         fiveDay.innerHTML += forecastDiv
