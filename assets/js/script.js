@@ -3,7 +3,10 @@ const WEATHER_URL = "https://api.openweathermap.org";
 const FIVE_DAY_FORECAST_PATH = "/data/2.5/forecast?";
 const CURRENT_WEATHER_PATH = "/data/2.5/weather?"
 const GEOCODE_PATH = "/geo/1.0/direct?"
-
+const SEARCH_HISTORY_KEY = "search-history"
+const searchHistory = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || []
+const searchHistoryDiv = document.querySelector("#search-history")
+const searchBtn = document.querySelector("#search-btn");
 
 //this function gets the coordinates
 function fetchCityCoordinates(cityName) {
@@ -16,17 +19,15 @@ function fetchCityCoordinates(cityName) {
 function handleSearch(event) {
     if (event.target.tagName === "BUTTON") { //this makes sure they clicked on the html tag button
         const cityInput = document.querySelector("#city-input"); //this where the value lives
+        if (!cityInput.value) {
+            return alert('Please insert a valid city')
+        }
         fetchCityCoordinates(cityInput.value) //this puts the value into the fetchCityCoordinates function
             .then((coordinates) => { //once we've got the coordinates and do the next thing
-                fetchCurrentWeather(coordinates[0].lat, coordinates[0].lon)
-                    .then(currentWeather => {
-                        renderCurrentWeather(currentWeather)
-                    })
-                fetchHourlyForecast(coordinates[0].lat, coordinates[0].lon) //putting the coordinates into fetchFiveDayForecast function
-                    .then(hourlyForecast => { 
-                        const fiveDayForecast = getFiveDayForecast(hourlyForecast.list)//once we get the hourly forecast we're gonna put it into the getFiveDayForecast function
-                        renderFiveDayForecast(fiveDayForecast)
-                    })
+                if (Array.isArray(coordinates)) {
+                    fetchWeather(coordinates[0].lat, coordinates[0].lon, coordinates[0].name)
+                    saveToSearchHistory(coordinates[0])
+                }
             })
     }
 }
@@ -64,7 +65,7 @@ function fetchCurrentWeather(lat, lon) {
         .then(data => data);
 }
 
-function renderCurrentWeather(weatherObj) {
+function renderCurrentWeather(weatherObj, cityName) {
     const temp = document.querySelector("#temp")
     const wind = document.querySelector("#wind")
     const humidity = document.querySelector("#humidity")
@@ -74,7 +75,7 @@ function renderCurrentWeather(weatherObj) {
     temp.innerText = `Temp: ${weatherObj.main.temp} °F`
     wind.innerText = `Wind: ${weatherObj.wind.speed} MPH`
     humidity.innerText = `Humidity: ${weatherObj.main.humidity} %`
-    city.innerText = `${weatherObj.name}`
+    city.innerText = `${cityName}`
     icon.src = getWeatherIcon(weatherObj.weather[0].icon)
     date.innerText = `${new Date().toDateString()}`
 }
@@ -102,8 +103,58 @@ function renderFiveDayForecast(fiveDayForecastList) {
     })
 }
 
+function fetchWeather(lat, lon, cityName) {
+    searchBtn.disabled = true;
+    fetchCurrentWeather(lat, lon)
+        .then(currentWeather => {
+            renderCurrentWeather(currentWeather, cityName)
+        })
+    fetchHourlyForecast(lat, lon) //putting the coordinates into fetchFiveDayForecast function
+        .then(hourlyForecast => { 
+            const fiveDayForecast = getFiveDayForecast(hourlyForecast.list)//once we get the hourly forecast we're gonna put it into the getFiveDayForecast function
+            renderFiveDayForecast(fiveDayForecast)
+            searchBtn.disabled = false;
+        })
+}
+
+function renderSearchHistory(searchHistoryList) {
+    searchHistoryDiv.innerHTML = ""
+    for (let i = 0; i < searchHistoryList.length; i++) {
+        const cityObj = searchHistoryList[i]
+        searchHistoryDiv.innerHTML += createCityTag(cityObj.name, cityObj.lat, cityObj.lon)
+    }
+}
+
+function createCityTag(cityName, lat, lon) {
+    return `
+    <p data-lat="${lat}" data-lon="${lon}" class="city-name">${cityName}</p>
+    `
+}
+
+function saveToSearchHistory(coordinates) {
+    const city = {name: coordinates.name, lat: coordinates.lat, lon: coordinates.lon}
+    searchHistory.unshift(city)
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(searchHistory))
+    renderSearchHistory(searchHistory)
+}
+
+function handleOnCityClick(event) {
+    if (event.target.className === "city-name") {
+        const lat = event.target.dataset.lat
+        const lon = event.target.dataset.lon
+        const cityName = event.target.innerText
+        fetchWeather(lat, lon, cityName)
+    }
+}
+
 window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
     const searchSection = document.querySelector(".search-engine");
+    const clearHistory = document.querySelector("#clear-history")
     searchSection.addEventListener("click", handleSearch);
+    searchHistoryDiv.addEventListener("click", handleOnCityClick)
+    clearHistory.addEventListener("click", () => {
+        localStorage.setItem(SEARCH_HISTORY_KEY, null)
+        renderSearchHistory([])
+    })
+    renderSearchHistory(searchHistory)
 });
