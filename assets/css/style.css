@@ -3,8 +3,15 @@ html, body {
     background-color: #74b87c;
 }
 
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 header{
     display: flex;
+    flex: 2;
     width: 100%;
     background-color: #8fe398;
     justify-content: center;
@@ -20,18 +27,58 @@ h1 {
 
 main {
     display: flex;
+    flex: 12;
 }
 
 aside {
-    display: flex;
     width: 20%;
-    align-items: center;
-    justify-content: center;
+    padding: 1rem;
+    margin: 2rem;
+    border: 1rem solid #3f6343;
+    border-radius: 1rem;
 }
+
+.search-title {
+    background-color: #8fe398;
+    color: azure;
+    border: 1rem solid azure;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
 
 .search-engine {
     display: flex;
     flex-direction: column;
+    text-align: center;
+}
+
+#city-input {
+    height: 2rem;
+}
+
+#search-btn, #clear-history {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+}
+
+
+.history {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.city-name {
+    border: 0.5rem solid #3f6343;
+    border-radius: 1rem;
+    background-color: #598e5f;
+    margin: 0.5rem 0;
+    cursor: default;
+    color: azure;
+    padding: 0.5rem;
 }
 
 .weather-content {
@@ -41,7 +88,7 @@ aside {
 }
 
 .present {
-    margin: 2rem;
+    margin-top: 2rem;
     display: flex;
     align-items: center;
     width: 40%;
@@ -49,6 +96,7 @@ aside {
     border-radius: 1rem;
     padding: 1rem;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .present-info {
@@ -65,19 +113,22 @@ aside {
     flex-direction: column;
     border: 1rem solid #3f6343;
     border-radius: 1rem;
-    margin: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-right: 2rem;
 }
 
 #five-day {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .fivecast {
     background-color: #598e5f;
     padding: 1.5rem;
     border-radius: 2rem;
-    margin: 1rem;
+    margin-bottom: 0.5rem;
     color: azure;
     border: 0.5rem solid azure;
     display: flex;
